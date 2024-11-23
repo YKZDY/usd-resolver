@@ -1,0 +1,21 @@
+{
+    "Plugins": [
+        {
+            "Info": {
+                "Types": {
+                    "OmniUsdResolver" : {
+                        "bases": [ "ArResolver" ],
+                        "implementsContexts": true,
+                        "implementsScopedCaches" : true,
+                        "uriSchemes": ["omniverse", "omni"]
+                    }
+                }
+            },
+            "LibraryPath": "../../omni_usd_resolver.dll",
+            "Name": "OmniverseUSDResolver",
+            "ResourcePath": "resources",
+            "Root": "..",
+            "Type": "library"
+        }
+    ]
+}

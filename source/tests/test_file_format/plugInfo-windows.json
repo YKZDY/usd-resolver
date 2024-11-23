@@ -1,0 +1,21 @@
+{
+    "Plugins": [
+        {
+            "Info": {
+                "Types": {
+                    "TestFileFormat": {
+                        "bases": [ "SdfFileFormat" ],
+                        "displayName": "Testing File Format plugin",
+                        "extensions": [ "testff" ],
+                        "formatId": "testff",
+                        "primary": true,
+                        "target": "usd"
+                    }
+                }
+            },
+            "LibraryPath": "../../../omni_test_file_format.dll",
+            "Name": "TestFileFormat",
+            "Type": "library"
+        }
+    ]
+}

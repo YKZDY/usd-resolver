@@ -1,0 +1,80 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(Linux) test_resolver",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/_build/linux-x86_64/debug/test_resolver",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/test-data",
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${env.LD_LIBRARY_PATH}:${workspaceFolder}/_build/target-deps/omni_client_library/debug:${workspaceFolder}/_build/target-deps/usd/debug/lib"
+                },
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "sourceFileMap": {
+                "/buildAgent/work/4e6c775e54dc6d2b": "${workspaceFolder}/../client-library",
+                "/buildAgent/work/ca6c508eae419cf8/USD": "${workspaceFolder}/../usd-build/USD",
+                "/build/glibc-OTsEL5/glibc-2.27": "/usr/src/glibc/glibc-2.27",
+                "/build/glibc-ZN95T4/glibc-2.31": "/usr/src/glibc/glibc-2.31",
+            },
+        },
+        {
+            "name": "(Linux) test python bindings",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/_build/target-deps/python37/bin/python3",
+            "args": [
+                "source/tests/python/test_client.py"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [
+                {
+                    "name": "LD_LIBRARY_PATH",
+                    "value": "${env.LD_LIBRARY_PATH}:${workspaceFolder}/_build/linux-x86_64/debug:${workspaceFolder}/_build/target-deps/usd/debug/lib:${workspaceFolder}/_build/target-deps/omni_client_library/debug"
+                },
+                {
+                    "name": "PYTHONPATH",
+                    "value": "${env.PYTHONPATH}:${workspaceFolder}/_build/linux-x86_64/debug/bindings-python:${workspaceFolder}/_build/target-deps/usd/debug/lib/python:${workspaceFolder}/_build/target-deps/omni_client_library/debug/bindings-python"
+                },
+                {
+                    "name": "PXR_PLUGINPATH_NAME",
+                    "value": "${workspaceFolder}/_build/linux-x86_64/debug/usd/omniverse/resources/"
+                },
+                {
+                    "name": "OMNI_TEST_HOST",
+                    "value": "114.nucleus.dev.cne.ngc.nvidia.com"
+                },
+            ],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "sourceFileMap": {
+                "/build/glibc-OTsEL5/glibc-2.27": "/usr/src/glibc/glibc-2.27",
+                "/build/glibc-ZN95T4/glibc-2.31": "/usr/src/glibc/glibc-2.31",
+            },
+        },
+    ]
+}

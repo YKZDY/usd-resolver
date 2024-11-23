@@ -1,0 +1,24 @@
+{
+    "Plugins": [
+        {
+            "Info": {
+                "Types": {
+                    "TestPrimaryResolver" : {
+                        "bases": [ "ArResolver" ],
+                        "implementsContexts": false,
+                        "implementsScopedCaches" : false
+                    },
+                    "TestSchemeResolver" : {
+                        "bases": [ "ArResolver" ],
+                        "implementsContexts": false,
+                        "implementsScopedCaches" : false,
+                        "uriSchemes": ["test"]
+                    }
+                }
+            },
+            "LibraryPath": "../../../omni_test_fallback.dll",
+            "Name": "TestFallbackResolver",
+            "Type": "library"
+        }
+    ]
+}

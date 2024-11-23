@@ -1,0 +1,250 @@
+########################################################################################################################
+# Repo tool base settings
+########################################################################################################################
+
+[repo]
+
+folders.repo_deps = "${root}/_build/repo-deps"
+folders.version_file = "${root}/_build/VERSION"
+
+[repo.tokens]
+usd_flavor = "${env:OMNI_USD_FLAVOR}"
+usd_ver = "${env:OMNI_USD_VER}"
+python_ver = "${env:OMNI_PYTHON_VER}"
+
+########################################################################################################################
+# Build tool setup
+########################################################################################################################
+
+[repo_build]
+# List of packman projects to pull (in order)
+fetch.packman_host_files_to_pull = [
+    "${root}/deps/host-deps.packman.xml",
+]
+fetch.packman_target_files_to_pull = [
+    "${root}/deps/target-deps.packman.xml",
+    "${root}/deps/usd-deps.packman.xml",
+]
+
+licensing.enabled = false
+licensing.packages = [
+    "${root}/deps/target-deps.packman.xml",
+    "${root}/deps/usd-deps.packman.xml",
+]
+licensing.output_dir = "${root}/_build/PACKAGE-LICENSES"
+licensing.fail_on_missing = true
+
+# Disable pip license gathering (we don't have any)
+fetch.pip.gather_licenses_path = ""
+
+# MSVC Configuration
+# See repo_build for all the different config options related to MSVC
+msbuild.link_host_toolchain = true
+msbuild.sln_file = "OmniUsdResolver.sln"
+msbuild.vs_version = ""  # choose the latest on the system
+
+[repo_build.docker]
+linbuild_extra_args = [
+    "--env", "OMNI_USD_FLAVOR",
+    "--env", "OMNI_USD_VER",
+    "--env", "OMNI_PYTHON_VER"
+]
+
+[[repo_build.argument]]
+name = "--usd-flavor"
+help = """The USD falvor"""
+extra_premake_args = ["--usd-flavor={}"]
+kwargs.required = false
+kwargs.nargs = 1
+kwargs.default = "${usd_flavor}"
+platforms = ["linux*", "windows*"]
+
+[[repo_build.argument]]
+name = "--usd-ver"
+help = """The USD version"""
+extra_premake_args = ["--usd-ver={}"]
+kwargs.required = false
+kwargs.nargs = 1
+kwargs.default = "${usd_ver}"
+platforms = ["linux*", "windows*"]
+
+[[repo_build.argument]]
+name = "--python-ver"
+help = """The python version"""
+extra_premake_args = ["--python-ver={}"]
+kwargs.required = false
+kwargs.nargs = 1
+kwargs.default = "${python_ver}"
+platforms = ["linux*", "windows*"]
+
+[[repo_build.argument]]
+name = "--local-path"
+help = """An optional path to a local USD installation"""
+extra_premake_args = ["--local-path={0}"]
+kwargs.required = false
+kwargs.nargs = 1
+platforms = ["linux*", "windows*"]
+
+########################################################################################################################
+# USD Build Tool
+########################################################################################################################
+[repo_usd]
+# The USD / Python root paths are set within our premake5.lua script
+usd_root = "${root}/_build/usd-deps/usd/%{config}"
+usd_python_root = "${root}/_build/usd-deps/python"
+generate_plugin_buildfiles = false
+plugin_buildfile_format = "premake"
+
+[repo_usd.plugin.omni_usd_resolver]
+
+plugin_dir = "${root}/source/library"
+lib_dir = "${root}/_build/${platform}/${config}"
+resources_dir = "${root}/_build/${platform}/${config}/usd/omniverse/resources"
+
+########################################################################################################################
+# Code Format Tool
+########################################################################################################################
+
+[repo_format]
+[repo_format.cpp.files]
+exclude = [
+    "source/OmniUsdVersion.h"
+]
+
+########################################################################################################################
+# Packaging 
+########################################################################################################################
+
+[repo_package.packages.omni_usd_resolver]
+omniverse_flow_version_scheme_2 = true
+configs = ["debug", "release"]
+package_per_config = true
+warn_if_not_exist = true
+append_git_branch = false
+append_platform = false
+append_config = false
+remove_pycache = true
+
+[repo_package.packages.symbols_omni_usd_resolver]
+omniverse_flow_version_scheme_2 = true
+configs = ["debug", "release"]
+package_per_config = true
+warn_if_not_exist = true
+append_git_branch = false
+append_platform = false
+append_config = false
+remove_pycache = true
+
+########################################################################################################################
+# Testing
+########################################################################################################################
+[repo_test]
+enabled = true
+
+test_root = "${root}/_build/${platform}/${config}"
+
+default_suite = "all"
+
+env_vars = [
+    ["OMNI_TRACE_LIB", "${root}/_build/target-deps/omni-trace/bin/${lib_prefix}carb.omnitrace.plugin${lib_ext}"]
+]
+
+python_paths = [
+    "${root}/_build/usd-deps/usd/${config}/lib/python",
+    "${root}/_build/target-deps/omni_client_library/${config}/bindings-python",
+    "${test_root}/bindings-python",
+]
+library_paths = [
+    "${root}/_build/target-deps/omni_client_library/${config}",
+    "${root}/_build/usd-deps/usd/${config}/bin",
+    "${root}/_build/usd-deps/usd/${config}/lib",
+    "${root}/_build/usd-deps/python/lib",
+    "${root}/_build/usd-deps/python",
+    "${test_root}",
+]
+
+# Resolver tests
+[repo_test.suites.resolver]
+kind = "executable"
+
+env_vars = [
+    ["PXR_PLUGINPATH_NAME", ""],
+    ["OMNI_USD_RESOLVER_MDL_BUILTIN_BYPASS", "0"]
+]
+
+executables = [
+    "${root}/_build/${platform}/${config}/test_resolver${exe_ext}",
+    "${root}/_build/${platform}/${config}/test_fallback${exe_ext}"
+]
+
+generate_report_cmd = []
+
+timeout = 300
+
+
+# FIXME: the glob_and_exec repo_test kind is preferable to executable for our repro tests
+# The problem with glob_and_exec is that it doesn't support the necessary
+# env_vars, python_paths and library_paths configuration.
+
+# Reproducible tests (no MDL bultin module bypassing)
+[repo_test.suites.repro_mdl_bypass_off]
+kind = "executable"
+
+env_vars = [
+    ["PXR_PLUGINPATH_NAME", ""],
+    ["OMNI_USD_RESOLVER_MDL_BUILTIN_BYPASS", "0"]
+]
+
+executables = [
+    "${root}/_build/${platform}/${config}/test_repro_OM-27494${exe_ext}",
+    "${root}/_build/${platform}/${config}/test_repro_OM-27691${exe_ext}",
+    "${root}/_build/${platform}/${config}/test_repro_OM-27691-bis${exe_ext}",
+    "${root}/_build/${platform}/${config}/test_repro_OM-49309${exe_ext}",
+    "${root}/_build/${platform}/${config}/test_repro_OM-47199-off${exe_ext}"
+]
+
+generate_report_cmd = []
+
+timeout = 300
+
+# Reproduciple tests (MDL bultin module bypassing)
+[repo_test.suites.repro_mdl_bypass_on]
+kind = "executable"
+
+# FIXME: There seems to be a bug with repo_test where once an env var is set for a suite
+# that same env var will be set for all suites ran after. So make sure that
+# OMNI_USD_RESOLVER_MDL_BUILTIN_BYPASS is set to "1" (non-default)
+# and ran as the last test suite (hence zzz_ prefix)
+env_vars = [
+    ["PXR_PLUGINPATH_NAME", ""],
+    ["OMNI_USD_RESOLVER_MDL_BUILTIN_BYPASS", "1"]
+]
+
+executables = [
+    "${root}/_build/${platform}/${config}/test_repro_OM-47199${exe_ext}",
+]
+
+generate_report_cmd = []
+
+timeout = 300
+
+[repo_test.suites.python]
+kind = "unittest"
+
+log_type = "xml"
+log_file = "${root}/_build/test/results.xml"
+
+env_vars = [
+    ["PXR_PLUGINPATH_NAME", "${test_root}/usd/omniverse/resources/"],
+    ["OMNI_USD_RESOLVER_MDL_BUILTIN_BYPASS", "0"]
+]
+
+# module_path =  "${root}/source/tests/python/test_client.py"
+discover_path = "${root}/_build/${platform}/${config}/bindings-python/omni/usd_resolver"
+
+# 5 Minutes
+timeout = 300
+
+[repo_test.python_executable]
+python_executable_path = "${root}/_build/usd-deps/python/python${exe_ext}"
+

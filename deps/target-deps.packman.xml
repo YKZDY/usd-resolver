@@ -1,0 +1,14 @@
+<project toolsVersion="5.0" chroniclePath="../_build/chronicles">
+  <dependency name="pybind11" linkPath="../_build/target-deps/pybind11">
+    <package name="pybind11" version="2.11.1-0" />
+  </dependency>
+  <dependency name="carb_sdk_plugins" linkPath="../_build/target-deps/carb_sdk_plugins">
+    <package name="carb_sdk+plugins.${platform}" version="167.3+release167.tc10550.94025cb3" />
+  </dependency>
+  <dependency name="omnitrace-sdk-cpp" linkPath="../_build/target-deps/omni-trace">
+    <package name="omnitrace-sdk-cpp" version="1.7.6a9ab9b8" />
+  </dependency>
+  <dependency name="omni_client_library" linkPath="../_build/target-deps/omni_client_library">
+      <package name="omni_client_library.${platform}" version="2.49.2" />
+  </dependency>
+</project>

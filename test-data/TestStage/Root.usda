@@ -1,0 +1,11 @@
+#usda 1.0
+(
+    defaultPrim = "set"
+)
+
+def Xform "set" (
+    kind = "assembly"
+    add references = @./cube/TwoCubes_set.usda@
+)
+{
+}

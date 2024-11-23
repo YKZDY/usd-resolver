@@ -1,0 +1,33 @@
+//
+// Include the necessary resources
+//
+#include <winver.h>
+#include <ntdef.h>
+#include "OmniUsdVersion.h"
+
+#ifdef RC_INVOKED
+
+// ------- version info -------------------------------------------------------
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION             OMNIUSDRESOLVER_VERSION_MAJOR,OMNIUSDRESOLVER_VERSION_MINOR,OMNIUSDRESOLVER_VERSION_PATCH,OMNIUSDRESOLVER_VERSION_BUILD
+PRODUCTVERSION          OMNIUSDRESOLVER_VERSION_MAJOR,OMNIUSDRESOLVER_VERSION_MINOR,OMNIUSDRESOLVER_VERSION_PATCH,OMNIUSDRESOLVER_VERSION_BUILD
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+        VALUE "CompanyName",      "NVIDIA"
+        VALUE "ProductName",      "NVIDIA Omniverse"
+        VALUE "FileDescription",  "NVIDIA Omniverse USD Resolver"
+        VALUE "FileVersion",      OMNIUSDRESOLVER_BUILD_STRING
+        VALUE "ProductVersion",   OMNIUSDRESOLVER_BUILD_STRING
+        VALUE "LegalCopyright",   "Copyright (c) 2018-2022, NVIDIA Corporation"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409,1200
+    END
+END
+#endif

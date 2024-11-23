@@ -1,0 +1,40 @@
+{
+    "env": {
+        "includePaths":  [
+            "${workspaceFolder}/_build/target-deps/omni_client_library/include",
+            "${workspaceFolder}/_build/target-deps/usd/release/include",
+            "${workspaceFolder}/_build/target-deps/carb_sdk_plugins/include"
+        ]
+    },
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${includePaths}"
+            ],
+            "defines": [
+                "LOG_COMPONENT=\"\""
+            ],
+            "compilerPath": "${workspaceFolder}/_build/host-deps/gcc-x86_64/bin/x86_64-unknown-linux-gnu-gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "gcc-x64"
+        },
+        {
+            "name": "Windows",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${includePaths}"
+            ],
+            "defines": [
+                "LOG_COMPONENT=\"\""
+            ],
+            "compilerPath": "${workspaceFolder}\\_build\\host-deps\\msvc\\VC\\Tools\\MSVC\\14.16.27023\\bin\\HostX64\\x64\\cl.exe",
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}

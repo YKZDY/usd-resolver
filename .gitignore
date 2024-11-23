@@ -1,0 +1,62 @@
+_*/
+.lastrun
+.lastformat
+.lastverify
+.DS_Store
+.cache
+.vscode/ipch
+
+# byte-compiled python files
+*.py[cod]
+
+# valgrind output
+massif.out.*
+
+# vim swap files
+*.swp
+
+# patch files
+*.diff
+*.patch
+
+# binaries
+*.ico
+*.bmp
+*.png
+*.gif
+*.jpg
+*.jpeg
+*.tga
+*.psd
+*.raw
+*.exr
+*.hdr
+*.dds
+*.ktx
+*.spv
+*.dxbc
+*.dxil
+*.gltf
+*.glb
+*.fbx
+*.obj
+*.mat
+*.suo
+.vscode/ipch/
+/.vs
+
+# user deps
+deps/*.user
+
+# local workspace
+.vscode/usd-resolver.windows.code-workspace
+.vscode/windows.env
+
+# Generated files
+deps/redist.packman.xml
+deps/usd-deps.packman.xml
+source/OmniUsdVersion.h
+PACKAGE-DEPS.yaml
+
+# Include __init__.py
+!__init__.py

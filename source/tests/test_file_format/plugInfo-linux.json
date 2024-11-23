@@ -1,0 +1,21 @@
+{
+    "Plugins": [
+        {
+            "Info": {
+                "Types": {
+                    "TestFileFormat": {
+                        "bases": [ "SdfFileFormat" ],
+                        "displayName": "Testing File Format plugin",
+                        "extensions": [ "testff" ],
+                        "formatId": "testff",
+                        "primary": true,
+                        "target": "usd"
+                    }
+                }
+            },
+            "LibraryPath": "../../../libomni_test_file_format.so",
+            "Name": "TestFileFormat",
+            "Type": "library"
+        }
+    ]
+}

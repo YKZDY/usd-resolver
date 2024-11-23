@@ -1,0 +1,20 @@
+# Common section:
+# Copy redist to support source linking (package.toml also includes in for packman packages)
+copy = [
+    ["include", "_build/$platform/$config/include"],
+    ["source/bindings/python/omni_usd_resolver/__init__.py", "_build/$platform/$config/bindings-python/omni/usd_resolver"],
+    ["source/plugInfo.json", "_build/$platform/$config/usd/omniverse/resources/plugInfo.json"],
+]
+link = []
+
+# Add per platform if needed
+[windows-x86_64]
+copy = [
+    ["_build/target-deps/carb_sdk_plugins/_build/$platform/$config/carb.dll", "_build/$platform/$config"],
+]
+link = []
+
+[linux]
+copy = [
+    ["_build/target-deps/carb_sdk_plugins/_build/$platform/$config/libcarb.so", "_build/$platform/$config"],
+]
