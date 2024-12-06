@@ -2,17 +2,17 @@
 
 ## Overview
 
-Omniverse USD Resolver is an implementation of OpenUSD's ArResolver plugin abstraction. It's sole purpose is to 
+Omniverse USD Resolver is an implementation of OpenUSD's ArResolver plugin abstraction. Its sole purpose is to 
 identify and resolve an asset in OpenUSD against a backing asset management system.
 
 ## Documentation
 
-The latest documentation can be found at http://omniverse-docs.s3-website-us-east-1.amazonaws.com/usd_resolver/
+The latest documentation can be found at https://docs.omniverse.nvidia.com/kit/docs/usd_resolver/latest/index.html
 
 ## Downloading
 
 You can get the latest build from Packman.
-There are seperate packages for each usd flavor, usd version, python version, platform, and configuration.
+There are separate packages for each usd flavor, usd version, python version, platform, and configuration.
 
 They are all named:
 omni_usd_resolver_{usd_flavor}_{usd_version}_py_{python_version}.{platform}.{config}
@@ -46,8 +46,8 @@ All packages use the same versioning scheme:
 
 ### USD, Python & Client Library
 
-The package includes `redist.packman.xml` which point to the versions of USD, Python and the Omniverse Client Library
-that this plugin was built against. You can include it in your own packman.xml file like this:
+The package includes `redist.packman.xml`, which points to the versions of USD, Python, and the Omniverse Client Library
+against which this plugin was built. You can include it in your own packman.xml file like this:
 
 ```
 <project toolsVersion="5.0">
