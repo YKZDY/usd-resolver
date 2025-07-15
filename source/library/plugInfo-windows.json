@@ -11,8 +11,8 @@
                     "OmniUsdWrapperFileFormat": {
                         "bases": [ "SdfFileFormat" ],
                         "displayName": "Omniverse Wrapper File Format",
-                        "extensions": [ "omniabc" ],
-                        "formatId": "omniabc",
+                        "extensions": [ "omnicache" ],
+                        "formatId": "omnicache",
                         "primary": true,
                         "target": "usd"
                     }

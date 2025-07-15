@@ -24,6 +24,8 @@
 #include "utils/Time.h"
 #include "utils/Trace.h"
 
+#include <cctype>
+#include <algorithm>
 #include <pxr/usd/ar/filesystemAsset.h>
 #include <pxr/usd/ar/filesystemWritableAsset.h>
 
@@ -36,6 +38,15 @@ namespace
 inline bool _IsSearchPath(const std::string& assetPath)
 {
     return isRelativePath(assetPath) && !isFileRelative(assetPath);
+}
+
+std::string _StrToLower(std::string s)
+{
+    std::transform(
+        s.begin(), s.end(), s.begin(),
+        [](unsigned char c){ return std::tolower(c); });
+
+    return s;
 }
 } // namespace
 
@@ -397,10 +408,19 @@ std::shared_ptr<ArWritableAsset> OmniUsdResolver::_OpenAssetForWrite(const ArRes
 std::string OmniUsdResolver::_GetExtension(const std::string& assetPath) const
 {
     auto parsedUri = parseUrl(assetPath);
-    auto extension = TfGetExtension(parsedUri->path);
+    auto extension = _StrToLower(TfGetExtension(parsedUri->path));
 
     // Check for Alembic URLs and force the "omni" extension
-    if (!isLocal(parsedUri) && extension == "abc")
+    if (!isLocal(parsedUri) && (
+        extension == "abc" ||
+        extension == "fbx" ||
+        extension == "gltf" ||
+        extension == "glb" ||
+        extension == "obj" ||
+        extension == "ply" ||
+        extension == "sbsar" ||
+        extension == "spz" ||
+        extension == "stl"))
     {
         // OMPE-5370: Special case alembic files by forcing the "omni" extension
         // which is associated with the OmniUsdWrapperFileFormat extension.
@@ -409,8 +429,8 @@ std::string OmniUsdResolver::_GetExtension(const std::string& assetPath) const
         //
         // This should be removed once a proper solution is found for
         // https://github.com/PixarAnimationStudios/OpenUSD/issues/2961
-        TF_DEBUG(OMNI_USD_RESOLVER).Msg("%s: %s -> omniabc\n", TF_FUNC_NAME().c_str(), assetPath.c_str());
-        return "omniabc";
+        TF_DEBUG(OMNI_USD_RESOLVER).Msg("%s: %s -> omnicache\n", TF_FUNC_NAME().c_str(), assetPath.c_str());
+        return "omnicache";
     }
 
     return extension;

@@ -463,6 +463,9 @@ workspace "OmniUsdResolver"
         links { "util" }
 
     filter {}
+    filter {"toolset:msc-v143"}
+        removeunreferencedcodedata("off")
+    filter {}
 
     filter { "configurations:debug" }
         defines { "DEBUG_OUTPUT=1" }

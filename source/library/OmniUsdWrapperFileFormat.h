@@ -14,7 +14,7 @@
 
 #include <OmniClient.h>
 
-#define OMNI_USD_FILE_FORMAT_TOKENS ((Id, "omniabc"))((Version, "1.0"))((Target, "usd"))
+#define OMNI_USD_FILE_FORMAT_TOKENS ((Id, "omnicache"))((Version, "1.0"))((Target, "usd"))
 
 #pragma warning(push)
 #pragma warning(disable : 4003) // not enough actual parameters for macro

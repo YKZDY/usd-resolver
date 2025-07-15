@@ -2269,9 +2269,9 @@ TEST(alembicUrls, "Test that alembic URLs will be associated with the Wrapper fi
 
     ArResolver& resolver = ArGetResolver();
     auto extension = resolver.GetExtension(testUrl);
-    if (extension != "omniabc")
+    if (extension != "omnicache")
     {
-        testlog::printf("Invalid extension for %s. Expected omniabc, got %s\n", testUrl.c_str(), extension.c_str());
+        testlog::printf("Invalid extension for %s. Expected omnicache, got %s\n", testUrl.c_str(), extension.c_str());
         return EXIT_FAILURE;
     }
 
