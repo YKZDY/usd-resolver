@@ -47,16 +47,18 @@ def generate_version_header(major, minor, patch, build, package_version, usd_fla
 #define OMNIUSDRESOLVER_BUILD_FLAVOR "{usd_flavor}"
 #define OMNIUSDRESOLVER_BUILD_PYTHON "{pyver}"
 """
-    filename = "source/OmniUsdVersion.h"
+    filename = os.path.join(REPO_ROOT, "source", "OmniUsdVersion.h")
     replace_file(filename, new_file_contents)
 
 
 def generate_version_file():
     # extract just the version without the build number, user, git hash etc.
-    with open("CHANGELOG.md") as f:
+    changelog_path = os.path.join(REPO_ROOT, "CHANGELOG.md")
+    with open(changelog_path) as f:
         version = f.readline().rstrip("\r\n")
 
-    replace_file("_build/VERSION", version)
+    version_path = os.path.join(REPO_ROOT, "_build", "VERSION")
+    replace_file(version_path, version)
     return version
 
 
@@ -75,12 +77,14 @@ def generate_usd_deps(options):
 
 def generate_redist_deps(options):
     # TODO: extract client-library dependencies
-    with open("deps/usd-deps.packman.xml") as deps_file:
+    usd_deps_path = os.path.join(REPO_ROOT, "deps", "usd-deps.packman.xml")
+    with open(usd_deps_path) as deps_file:
         usd_deps_data = xml.etree.ElementTree.parse(deps_file)
 
     usd_deps_root = usd_deps_data.getroot()
 
-    with open("deps/target-deps.packman.xml") as deps_file:
+    target_deps_path = os.path.join(REPO_ROOT, "deps", "target-deps.packman.xml")
+    with open(target_deps_path) as deps_file:
         client_library_data = xml.etree.ElementTree.parse(deps_file)
 
     target_deps_root = client_library_data.getroot()
@@ -91,7 +95,8 @@ def generate_redist_deps(options):
 
     xml.etree.ElementTree.indent(usd_deps_root)
 
-    with open("deps/redist.packman.xml", "wb") as deps_file:
+    redist_path = os.path.join(REPO_ROOT, "deps", "redist.packman.xml")
+    with open(redist_path, "wb") as deps_file:
         deps_file.write(xml.etree.ElementTree.tostring(usd_deps_root))
 
 
