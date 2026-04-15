@@ -50,7 +50,7 @@ The package includes `redist.packman.xml`, which points to the versions of USD, 
 against which this plugin was built. You can include it in your own packman.xml file like this:
 
 ```
-<project toolsVersion="5.0">
+<project toolsVersion="5.6">
   <import path="../_build/target-deps/omni_usd_resolver/deps/redist.packman.xml">
   </import>
   <dependency name="usd_${config}" linkPath="../_build/usd-deps/usd/${config}">

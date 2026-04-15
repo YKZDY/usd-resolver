@@ -1,4 +1,4 @@
-<project toolsVersion="5.0" chroniclePath="../_build/chronicles">
+<project toolsVersion="5.6" chroniclePath="../_build/chronicles">
   <dependency name="pybind11" linkPath="../_build/target-deps/pybind11">
     <package name="pybind11" version="2.11.1-0" />
   </dependency>
